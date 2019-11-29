@@ -50,5 +50,6 @@ test:
 production:
   <<: *default
   database: photo-sender_production
-  username: photo-sender
-  password: <%= ENV['PHOTO-SENDER_DATABASE_PASSWORD'] %>
+  username: root
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /var/lib/mysql/mysql.sock
