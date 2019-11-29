@@ -9,21 +9,9 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    Profile.create(profile_params)
-    
+    Profile.create(profile_params)   
   end
 
-  def show
-  end
-
-  def edit
-  end
-
-  def update
-  end
-
-  def destroy
-  end
 
   private
   def profile_params
