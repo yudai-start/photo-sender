@@ -1,0 +1,13 @@
+<h1>indexページ</h1>
+
+<%= link_to "プロフィール作成", "/profiles/new"%>
+<% @profiles.each do |profile| %>
+  <div class="post">
+    <div class="profile-name">
+      名前:<%= profile.name%>
+    </div >
+    <div class="profile-image">
+      <%= image_tag src=profile.image.url %>
+    </div> 
+  </div> 
+<% end %>
