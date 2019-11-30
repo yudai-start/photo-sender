@@ -7,11 +7,26 @@ class ProfileUploader < CarrierWave::Uploader::Base
   # storage :file
   storage :fog
 
+  def  initialize（ *）
+    super
+
+   self .fog_credentials = {
+    provider: 'AWS',
+    aws_access_key_id: Rails.application.secrets.aws_access_key_id,
+    aws_secret_access_key: Rails.application.secrets.aws_secret_access_key,
+    region: 'ap-northeast-1'
+   }
+   self .fog_directory =  "photo-sender-profiles"
+   self .asset_host = 'https://s3-ap-northeast-1.amazonaws.com/photo-sender-profiles'
+  end 
+
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
+
+  
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url(*args)
