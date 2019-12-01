@@ -10,6 +10,10 @@ class PostsController < ApplicationController
 
   def create
     Post.create(post_params)
+    image_path = post_params[:image].original_filename
+    search_all_faces_by_image(image_path)
+
+
   end
 
   private
