@@ -11,9 +11,11 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    Profile.create(profile_params)  
+    profile = Profile.new(profile_params)
+    profile.save
     image_path = profile_params[:image].original_filename
-    index_face(image_path)
+    face_ids = registration_face(image_path)
+    refine_face_id(face_ids, profile)
   end
 
 
