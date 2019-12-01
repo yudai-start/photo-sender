@@ -1,5 +1,7 @@
 class ProfilesController < ApplicationController
-   
+ 
+  
+
   def index
     @profiles = Profile.all
   end
@@ -9,7 +11,9 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    Profile.create(profile_params)   
+    Profile.create(profile_params)  
+    image_path = profile_params[:image].original_filename
+    index_face(image_path)
   end
 
 
@@ -17,5 +21,11 @@ class ProfilesController < ApplicationController
   def profile_params
     params.require(:profile).permit(:name, :email, :image)
   end
-  
+
+  # def image_path
+  #   params.require(:profile).permit(:image)
+  # end
+
+
+
 end
