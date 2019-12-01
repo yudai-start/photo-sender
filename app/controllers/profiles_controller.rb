@@ -11,9 +11,10 @@ class ProfilesController < ApplicationController
   end
 
   def create
-    Profile.create(profile_params)  
+    profile = Profile.new(profile_params)
+    profile.save
     image_path = profile_params[:image].original_filename
-    index_face(image_path)
+    index_face(image_path, profile)
   end
 
 

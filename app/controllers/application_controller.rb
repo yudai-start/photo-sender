@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
-  def index_face(image_path)
+  def index_face(image_path,profile)
     require "aws-sdk-rekognition"
    
     Aws.config.update({
@@ -21,8 +21,9 @@ class ApplicationController < ActionController::Base
       }
     })
 
-    face_number = result[:face_records].map{ |face| [face[:face][:face_id]]}
-
-    puts "#{face_number}"
+    face_id = result[:face_records].map{ |face| [face[:face][:face_id]]}
+    face_id = face_id[0][0]
+    profile.face_id = "#{face_id}"
+    profile.save
   end
 end
