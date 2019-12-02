@@ -14,7 +14,7 @@ class PostsController < ApplicationController
     image_path = post_params[:image].original_filename
     search_all_faces_by_image(image_path,post)
     puts "#{post.profile.email}+いいいいいい"
-    NotificationMailer.send_confirm_to_user(post).deliver
+    NotificationMailer.send_confirm_to_user(post).deliver_later
   end
 
   private
