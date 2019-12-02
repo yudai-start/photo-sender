@@ -13,6 +13,7 @@ class PostsController < ApplicationController
     post.save
     image_path = post_params[:image].original_filename
     search_all_faces_by_image(image_path,post)
+    puts "#{post.profile.email}+いいいいいい"
 
   end
 
