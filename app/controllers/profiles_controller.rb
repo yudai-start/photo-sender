@@ -15,7 +15,7 @@ class ProfilesController < ApplicationController
     profile.save
     image_path = profile_params[:image].original_filename
     face_ids = registration_face(image_path)
-    refine_face_id(face_ids, profile)
+    save_face_id(face_ids, profile)
   end
 
 
