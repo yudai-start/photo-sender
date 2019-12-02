@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
     return face_ids
   end
   
-  def refine_face_id(face_ids, profile)
+  def save_face_id(face_ids, profile)
     face_id = face_ids[0][0]
     profile.face_id = "#{face_id}"
     profile.save
@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
     return matched_face_id
   end
 
-  def search_all_faces_by_image(image_path)
+  def search_all_faces_by_image(image_path,post)
 
     require "aws-sdk-rekognition"
    
@@ -66,11 +66,37 @@ class ApplicationController < ActionController::Base
 
     face_ids = registration_face(image_path)
 
-    matched_faces = face_ids.map do |face_id|
+    matched_face_ids = face_ids.map do |face_id|
       face_id = face_id[0]
       search_face(face_id)
     end
-    puts "#{matched_faces}+ああああ"
+
+    #登録したFace_idの削除
+    face_ids.map do |face_id|
+      face_id = face_id[0]
+      rekog.delete_faces({
+      collection_id: "profile-photos", 
+      face_ids: [
+        "#{face_id}", 
+      ], 
+    })
+    end
+
+    #postテーブルにmatched_face_idを登録する
+    #ここから、仮に写真に一人しか写ってないと言う仮定で作っていこう！
+    matched_face_ids = matched_face_ids[0]
+    post.match_face_id = "#{matched_face_ids}"
+    post.save
+
+    puts "#{matched_face_ids}+ああああ"
+    return matched_face_ids
+
   end
+
+  def save_matched_faces(matched_face_ids, post)
+    matched_face_id = face_ids[0]
+    profile.face_id = "#{matched_face_id}"
+  end
+
 
 end

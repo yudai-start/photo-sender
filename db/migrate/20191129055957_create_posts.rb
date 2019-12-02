@@ -3,7 +3,7 @@ class CreatePosts < ActiveRecord::Migration[5.0]
     create_table :posts do |t|
       t.text :content
       t.string :image
-      t.string :profile_id
+      t.string :match_face_id
       t.timestamps
     end
   end

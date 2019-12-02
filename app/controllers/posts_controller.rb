@@ -9,11 +9,12 @@ class PostsController < ApplicationController
   end
 
   def create
-    Post.create(post_params)
+    post = Post.new(post_params)
+    post.save
     image_path = post_params[:image].original_filename
-    search_all_faces_by_image(image_path)
-
-
+    search_all_faces_by_image(image_path,post)
+    puts "#{post.profile.email}+いいいいいい"
+    NotificationMailer.send_confirm_to_user(post).deliver_later
   end
 
   private
